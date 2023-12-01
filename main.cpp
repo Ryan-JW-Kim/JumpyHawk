@@ -21,11 +21,25 @@
 GLsizei winWidth = 800, winHeight = 600;
 
 // object
-player player = {10, 50, 0, 0, 1, 3};
+player player = {30, 0, 1, 0, 1, 2.5};
 score score = {0};
 pipeList pipeList = {NULL, NULL, 15, 0};
 
-//time_t now = time(nullptr);
+
+void physicsUpdate(int value) {
+	// Calculate deltaTime for physics
+    static int prevTime = glutGet(GLUT_ELAPSED_TIME);
+    int currentTime = glutGet(GLUT_ELAPSED_TIME);
+    GLfloat deltaTime = (currentTime - prevTime);
+    prevTime = currentTime;
+
+    // Update physics using deltaTime
+    std::cout << "Delta Time: " << deltaTime << "\n";
+    update(&player, deltaTime);
+
+    // Set up the timer callback to trigger physicsUpdate again
+    glutTimerFunc(16, physicsUpdate, 1);
+}
 
 void init(void) {
 	glutInitDisplayMode(GLUT_DOUBLE);  // GLUT_DOUBLE for double frame buffer
@@ -47,12 +61,6 @@ void init(void) {
 void drawObjectList() {
 	glClear(GL_COLOR_BUFFER_BIT); // Clear display window.
 
-	// Calculate deltaTime for physics
-	GLfloat deltaTime = 1/60; // Default to 60 updatees per second
-//	now = time(nullptr);
-
-	update(&player, deltaTime);
-
 	// Draw objects
 	drawPipes(&pipeList);
 	drawPlayer(&player);
@@ -62,24 +70,23 @@ void drawObjectList() {
 	glutSwapBuffers();
 }
 
-
-
 static void
 key(unsigned char key, int x, int y)
 {
     switch (key)
     {
-    case 1:
+    case ' ':
+    	std::cout << "JUMP" << "\n";
     	jump(&player);
     	break;
-    case 2:
-    	// QUIT GAME
+    case 'q':
+    	std::cout << "END GAME" << "\n";
     	break;
     }
 
+
     glutPostRedisplay();
 }
-
 
 void winReshapeFcn(GLint newWidth, GLint newHeight) {
 	/*  Reset viewport and projection parameters  */
@@ -102,6 +109,7 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(drawObjectList);
 	glutReshapeFunc(winReshapeFcn);
 	glutKeyboardFunc(key);
+	glutTimerFunc(16, physicsUpdate, 1);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();
 	return 0;
