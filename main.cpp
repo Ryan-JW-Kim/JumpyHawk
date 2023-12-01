@@ -25,7 +25,6 @@ player player = {30, 0, 1, 0, 1, 2.5};
 score score = {0};
 pipeList pipeList = {NULL, NULL, 15, 0};
 
-
 void physicsUpdate(int value) {
 	// Calculate deltaTime for physics
     static int prevTime = glutGet(GLUT_ELAPSED_TIME);
@@ -34,7 +33,6 @@ void physicsUpdate(int value) {
     prevTime = currentTime;
 
     // Update physics using deltaTime
-    std::cout << "Delta Time: " << deltaTime << "\n";
     update(&player, deltaTime);
 
     // Set up the timer callback to trigger physicsUpdate again
@@ -51,11 +49,11 @@ void init(void) {
 	gluOrtho2D(0.0, winWidth, winHeight, 0.0); // set top left as origin
 
 	// Initialize pipeList to max size
-	while (!isFull(&pipeList)) {
-		float seed = rand() % 10 + 1;
-		createNext(&pipeList, seed);
-	}
+	float seed = rand() % 10 + 1;
 
+	while (createNext(&pipeList, seed)) {
+		seed = rand() % 10 + 1;
+	}
 }
 
 void drawObjectList() {
@@ -76,11 +74,9 @@ key(unsigned char key, int x, int y)
     switch (key)
     {
     case ' ':
-    	std::cout << "JUMP" << "\n";
     	jump(&player);
     	break;
     case 'q':
-    	std::cout << "END GAME" << "\n";
     	break;
     }
 

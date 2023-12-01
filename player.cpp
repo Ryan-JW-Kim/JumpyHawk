@@ -23,7 +23,6 @@ void update(player *player, GLfloat deltaTime) {
 	player->velocity *= 0.9; // Velocity decay
 	if (player->velocity <= 0.02) { player->velocity = 0; } // Round down
 
-
 	glutPostRedisplay();
 
 }

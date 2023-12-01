@@ -10,7 +10,7 @@
 #include <GL/glut.h>
 
 typedef struct pipe {
-	GLint x, y, width, gapY, gapHeight;
+	GLint x, width, gapY, gapHeight;
 	int onScreen;
 	struct pipe *prev, *next;
 	int scoreCounted;
@@ -27,7 +27,7 @@ void drawPipes(pipeList *list);
 void drawPipe(pipe *currPipe);
 void movePipes(pipeList *list, GLint gameSpeed);
 void trimPipes(pipeList *list);
-void createNext(pipeList *list, float randomSeed);
+int createNext(pipeList *list, float randomSeed);
 int isFull(pipeList *list);
 
 #endif /* PIPES_HPP_ */

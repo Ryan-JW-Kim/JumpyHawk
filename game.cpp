@@ -5,6 +5,7 @@
  */
 
 #include <GL/glut.h>
+#include <iostream>
 #include "game.hpp"
 
 void iterScore(score *board) {
