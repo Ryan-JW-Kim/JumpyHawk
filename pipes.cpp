@@ -10,6 +10,32 @@
 #include <math.h>
 #include "pipes.hpp"
 
+int checkCollision(player *player, pipeList *list) {
+	/*
+	 *
+	 */
+
+	if (list->numPipes != 0) {
+
+		pipe *currPipe = list->start;
+
+		while (currPipe != NULL) {
+
+			if (player->x+player->width > currPipe->x && player->x+player->width < currPipe->x + currPipe->width) {
+
+				if (player->y < currPipe->gapY || player->y > currPipe->gapY + currPipe->gapHeight) {
+					return 1;
+				}
+			}
+
+
+			currPipe = currPipe->next;
+		}
+	}
+
+	return 0;
+}
+
 void drawPipes(pipeList *list) {
 	/*
 	 * Draw pipes from a linked list of pipes
@@ -110,7 +136,7 @@ int createNext(pipeList *list) {
 	pipe *endPipe = list->end;
 	pipe *newPipe = new pipe();
 	newPipe->width =  50;
-	newPipe->gapHeight = 50;
+	newPipe->gapHeight = 200;
 	newPipe->prev = endPipe;
 	newPipe->scoreCounted = 0;
 

@@ -10,11 +10,11 @@
 #include <GL/glut.h>
 
 typedef struct player {
-	GLint x, y;
+	GLint x, y, width, height;
 	GLfloat orientation, velocity, gravity, jumpForce;
 } PLAYER;
 
-void update(player *player, GLfloat deltaTime);
+void updatePhysics(player *player, GLfloat deltaTime);
 void jump(player *player);
 void drawPlayer(player *player);
 

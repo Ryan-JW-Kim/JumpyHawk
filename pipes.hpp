@@ -27,6 +27,7 @@ void drawPipes(pipeList *list);
 void drawPipe(pipe *currPipe);
 void movePipes(pipeList *list, GLfloat gameSpeed, GLfloat deltaTime);
 void trimPipeList(pipeList *list);
+int checkCollision(player *player, pipeList *list);
 int createNext(pipeList *list);
 int isFull(pipeList *list);
 

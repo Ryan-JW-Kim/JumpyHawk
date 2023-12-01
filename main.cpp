@@ -21,7 +21,7 @@
 GLsizei winWidth = 800, winHeight = 600;
 
 // object
-player player = {30, 0, 1, 0, 1, 2.5};
+player player = {30, 0, 40, 20, 1, 0, 1, 2};
 score score = {0, .1};
 pipeList pipeList = {NULL, NULL, 15, 0};
 
@@ -33,18 +33,26 @@ void physicsUpdate(int value) {
     prevTime = currentTime;
 
     std::cout << "Delta Time: " << deltaTime << "\n";
-    // Update physics using deltaTime
-    update(&player, deltaTime);
 
+    std::cout << "1\n";
+
+
+    updatePhysics(&player, deltaTime);
     movePipes(&pipeList, score.currentSpeed, deltaTime);
+    std::cout << "2\n";
 
-    updateBoard(&score, &pipeList, &player);
-    trimPipeList(&pipeList); // Remove off screen pipes
+    if (checkCollision(&player, &pipeList)) {
+    	endGame(&score);
+    } else {
 
-    while (createNext(&pipeList)) {} // Attempt to refill pipe list to max
+    	updateBoard(&score, &pipeList, &player);
+		trimPipeList(&pipeList); // Remove off screen pipes
+		while (createNext(&pipeList)) {} // Attempt to refill pipe list to max
+    	glutTimerFunc(16, physicsUpdate, 1);
+    }
 
     // Set up the timer callback to trigger physicsUpdate again
-    glutTimerFunc(16, physicsUpdate, 1);
+
 }
 
 void init(void) {

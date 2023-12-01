@@ -38,6 +38,9 @@ void updateBoard(score *board, pipeList *list, player *player) {
 		}
 	}
 }
+void endGame(score *board) {
+
+}
 
 void drawScore(score *board) {
 	/*

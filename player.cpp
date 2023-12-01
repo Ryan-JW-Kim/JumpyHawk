@@ -11,7 +11,7 @@
 #include <math.h>
 #include "player.hpp"
 
-void update(player *player, GLfloat deltaTime) {
+void updatePhysics(player *player, GLfloat deltaTime) {
 	/*
 	 * Apply simple physics to the player given the time passed
 	 * since the last update.
@@ -48,8 +48,6 @@ void drawPlayer(player *player) {
 	 * Draw the player sprite given its x and y position as well
 	 * as the orientation (when player falling nose down)
 	 */
-	GLint width = 40;
-	GLint height = 20;
 
 
 	glColor3f(0, 0, 0);
@@ -57,9 +55,9 @@ void drawPlayer(player *player) {
 	glBegin(GL_POLYGON);
 
 		glVertex2f(player->x,       player->y);
-		glVertex2f(player->x,       player->y+height);
-		glVertex2f(player->x+width, player->y+height);
-		glVertex2f(player->x+width, player->y);
+		glVertex2f(player->x,       player->y+player->height);
+		glVertex2f(player->x+player->width, player->y+player->height);
+		glVertex2f(player->x+player->width, player->y);
 
 	glEnd();
 

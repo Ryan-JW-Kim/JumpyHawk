@@ -19,5 +19,6 @@ typedef struct score {
 void saveSession(score *board);
 void updateBoard(score *board, pipeList *list, player *player);
 void drawScore(score *board);
+void endGame(score *board);
 
 #endif /* GAME_HPP_ */
