@@ -13,7 +13,7 @@
 
 typedef struct score {
 	int currentScore;
-	int currentSpeed;
+	GLfloat currentSpeed;
 } SCORE;
 
 void iterScore(score *board);

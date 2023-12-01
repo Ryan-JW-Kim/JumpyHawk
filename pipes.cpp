@@ -22,8 +22,7 @@ void drawPipes(pipeList *list) {
 		while (currPipe != NULL) {
 
 			drawPipe(currPipe);
-			std::cout << "Drawing" << "\n";
-			currPipe = currPipe->prev;
+			currPipe = currPipe->next;
 		}
 	}
 }
@@ -54,23 +53,49 @@ void drawPipe(pipe *currPipe) {
 
 }
 
-void movePipes(pipeList *list, GLint gameSpeed) {
+void movePipes(pipeList *list, GLfloat gameSpeed, GLfloat deltaTime) {
 	/*
 	 * Move pipes within the linked list according to the current gameSpeed
 	 * state found within the "score" struct.
 	 */
 
+	if (list->numPipes != 0) {
+
+		pipe *currPipe = list->start;
+
+		while (currPipe != NULL) {
+
+			currPipe->x -= (gameSpeed * deltaTime);
+			currPipe = currPipe->next;
+		}
+	}
+
 }
 
-void trimPipes(pipeList *list) {
+void trimPipeList(pipeList *list) {
 	/*
-	 * Given the linked list of pipes delete pipes which are too far
-	 * left.
+	 * Given the linked list of pipes delete start pipe which may be too far left.
 	 */
 
+	// Remove check
+	if (list->start->x < (0 - (list->start->width * 2))) {
+
+		pipe *temp = list->start;
+
+		if (temp->next != NULL) { temp->next->prev = NULL; }
+
+		list->start = temp->next;
+
+		if (list->start == NULL) { list->end = NULL; }
+
+		list->numPipes -= 1;
+
+		delete temp;
+
+	}
 }
 
-int createNext(pipeList *list, float randomSeed) {
+int createNext(pipeList *list) {
 	/*
 	 * Create the next pipe given some randomSeed to generate the location
 	 * of the pipe gap, check that adding new pipe will not violate
@@ -80,27 +105,30 @@ int createNext(pipeList *list, float randomSeed) {
 	if (isFull(list)) {
 		return 0;
 	}
-	GLint padding = 30;
-	GLint x, width, gapY, gapHeight;
+
+	// Define new pipe
 	pipe *endPipe = list->end;
-
 	pipe *newPipe = new pipe();
-
-	newPipe->width =  20;
-	newPipe->gapY = 400;
-	newPipe->gapHeight = 30;
-	newPipe->onScreen = 0;
+	newPipe->width =  50;
+	newPipe->gapHeight = 50;
 	newPipe->prev = endPipe;
 	newPipe->scoreCounted = 0;
 
+	// Randomize position of pipe gape
+	int randMin = newPipe->gapHeight;
+	int randMax = glutGet(GLUT_WINDOW_HEIGHT) - newPipe->gapHeight;
+	int diff = randMax - randMin;
+	float randomSeed = rand() % diff + 1; // Seed random 1 - 25
+	newPipe->gapY = newPipe->gapHeight + randomSeed; // For window height of 600
+
+	GLint x;
 	if (list->numPipes == 0) {
-		x = 50;
+		x = 250;
 		list->start = newPipe;
 	} else {
-		x = endPipe->x + padding;
+		x = endPipe->x + 200; // Inter-pipe padding of 200 units
 		endPipe->next = newPipe;
 	}
-
 	newPipe->x = x;
 
 	list->end = newPipe;

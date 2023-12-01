@@ -11,7 +11,6 @@
 
 typedef struct pipe {
 	GLint x, width, gapY, gapHeight;
-	int onScreen;
 	struct pipe *prev, *next;
 	int scoreCounted;
 
@@ -25,9 +24,10 @@ typedef struct pipeList {
 
 void drawPipes(pipeList *list);
 void drawPipe(pipe *currPipe);
-void movePipes(pipeList *list, GLint gameSpeed);
-void trimPipes(pipeList *list);
-int createNext(pipeList *list, float randomSeed);
+void movePipes(pipeList *list, GLfloat gameSpeed, GLfloat deltaTime);
+void updateScore(pipeList *list, player *player);
+void trimPipeList(pipeList *list);
+int createNext(pipeList *list);
 int isFull(pipeList *list);
 
 #endif /* PIPES_HPP_ */

@@ -22,7 +22,7 @@ GLsizei winWidth = 800, winHeight = 600;
 
 // object
 player player = {30, 0, 1, 0, 1, 2.5};
-score score = {0};
+score score = {0, .1};
 pipeList pipeList = {NULL, NULL, 15, 0};
 
 void physicsUpdate(int value) {
@@ -32,8 +32,16 @@ void physicsUpdate(int value) {
     GLfloat deltaTime = (currentTime - prevTime);
     prevTime = currentTime;
 
+    std::cout << "Delta Time: " << deltaTime << "\n";
     // Update physics using deltaTime
     update(&player, deltaTime);
+
+    movePipes(&pipeList, score.currentSpeed, deltaTime);
+
+    checkScore(&pipeList, &player);
+    trimPipeList(&pipeList); // Remove off screen pipes
+
+    while (createNext(&pipeList)) {} // Attempt to refill pipe list to max
 
     // Set up the timer callback to trigger physicsUpdate again
     glutTimerFunc(16, physicsUpdate, 1);
@@ -49,11 +57,8 @@ void init(void) {
 	gluOrtho2D(0.0, winWidth, winHeight, 0.0); // set top left as origin
 
 	// Initialize pipeList to max size
-	float seed = rand() % 10 + 1;
+	while (createNext(&pipeList)) {}
 
-	while (createNext(&pipeList, seed)) {
-		seed = rand() % 10 + 1;
-	}
 }
 
 void drawObjectList() {
