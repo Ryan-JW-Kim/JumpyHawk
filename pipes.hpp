@@ -8,6 +8,7 @@
 #define PIPES_HPP_
 
 #include <GL/glut.h>
+#include "player.hpp"
 
 typedef struct pipe {
 	GLint x, width, gapY, gapHeight;
@@ -25,7 +26,6 @@ typedef struct pipeList {
 void drawPipes(pipeList *list);
 void drawPipe(pipe *currPipe);
 void movePipes(pipeList *list, GLfloat gameSpeed, GLfloat deltaTime);
-void updateScore(pipeList *list, player *player);
 void trimPipeList(pipeList *list);
 int createNext(pipeList *list);
 int isFull(pipeList *list);

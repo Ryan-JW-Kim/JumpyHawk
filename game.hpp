@@ -16,7 +16,6 @@ typedef struct score {
 	GLfloat currentSpeed;
 } SCORE;
 
-void iterScore(score *board);
 void saveSession(score *board);
 void updateBoard(score *board, pipeList *list, player *player);
 void drawScore(score *board);

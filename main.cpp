@@ -38,7 +38,7 @@ void physicsUpdate(int value) {
 
     movePipes(&pipeList, score.currentSpeed, deltaTime);
 
-    checkScore(&pipeList, &player);
+    updateBoard(&score, &pipeList, &player);
     trimPipeList(&pipeList); // Remove off screen pipes
 
     while (createNext(&pipeList)) {} // Attempt to refill pipe list to max
