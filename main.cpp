@@ -36,7 +36,6 @@ void physicsUpdate(int value) {
 
     std::cout << "1\n";
 
-
     updatePhysics(&player, deltaTime);
     movePipes(&pipeList, score.currentSpeed, deltaTime);
     std::cout << "2\n";
@@ -48,11 +47,9 @@ void physicsUpdate(int value) {
     	updateBoard(&score, &pipeList, &player);
 		trimPipeList(&pipeList); // Remove off screen pipes
 		while (createNext(&pipeList)) {} // Attempt to refill pipe list to max
-    	glutTimerFunc(16, physicsUpdate, 1);
+
+		glutTimerFunc(16, physicsUpdate, 1); // Set up the timer callback to trigger physicsUpdate again
     }
-
-    // Set up the timer callback to trigger physicsUpdate again
-
 }
 
 void init(void) {
@@ -71,6 +68,9 @@ void init(void) {
 
 void drawObjectList() {
 	glClear(GL_COLOR_BUFFER_BIT); // Clear display window.
+
+	// background
+	// clouds
 
 	// Draw objects
 	drawPipes(&pipeList);
@@ -92,8 +92,6 @@ key(unsigned char key, int x, int y)
     case 'q':
     	break;
     }
-
-
     glutPostRedisplay();
 }
 
@@ -124,3 +122,14 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
+
+// Todo:
+// 1. Background and clouds
+// 2. Save session
+
+// 3. Orientation change
+// 4. Chem trail?
+// 4.1 increase speed
+
+// 5. Score board
+// 6. Hawk image
