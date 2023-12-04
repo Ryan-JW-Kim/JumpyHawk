@@ -31,7 +31,9 @@ void updateBoard(score *board, pipeList *list, player *player) {
 
 			if (currPipe->x < player->x && !currPipe->scoreCounted) {
 			board->currentScore += 1;
-			currPipe->scoreCounted = 1;
+				
+			board->currentSpeed += board->increaseSpeed;
+			board->increaseSpeed *= 0.5;
 
 			}
 			currPipe = currPipe->next;
