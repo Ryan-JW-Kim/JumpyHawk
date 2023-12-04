@@ -14,6 +14,7 @@
 typedef struct score {
 	int currentScore;
 	GLfloat currentSpeed;
+	GLfloat increaseSpeed;
 } SCORE;
 
 void saveSession(score *board);
