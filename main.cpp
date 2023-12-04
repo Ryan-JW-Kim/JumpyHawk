@@ -22,7 +22,7 @@ GLsizei winWidth = 800, winHeight = 600;
 
 // object
 player player = {30, 0, 40, 20, 1, 0, 1, 2};
-score score = {0, .1};
+score score = {0, .1, 0.05};
 pipeList pipeList = {NULL, NULL, 15, 0};
 
 void physicsUpdate(int value) {
