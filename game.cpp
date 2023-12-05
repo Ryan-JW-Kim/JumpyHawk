@@ -6,12 +6,21 @@
 
 #include <GL/glut.h>
 #include <iostream>
+#include <fstream>
 #include "game.hpp"
+#include <math.h>
 
 void saveSession(score *board) {
 	/*
 	 * Save the score of the current session
 	 */
+
+	std::ofstream outFile("score.txt");
+
+	if (outFile.is_open()) {
+		outFile << "Player Score: " << board->currentScore << "\n";
+		outFile.close();
+	}
 
 }
 
@@ -31,9 +40,12 @@ void updateBoard(score *board, pipeList *list, player *player) {
 
 			if (currPipe->x < player->x && !currPipe->scoreCounted) {
 			board->currentScore += 1;
-				
+			currPipe->scoreCounted = 1;
+
 			board->currentSpeed += board->increaseSpeed;
 			board->increaseSpeed *= 0.5;
+
+			std::cout << "Current Speed: " << board->currentSpeed << "\n";
 
 			}
 			currPipe = currPipe->next;
@@ -41,6 +53,8 @@ void updateBoard(score *board, pipeList *list, player *player) {
 	}
 }
 void endGame(score *board) {
+
+	saveSession(board);
 
 }
 
