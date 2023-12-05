@@ -67,7 +67,7 @@ void init(void) {
 }
 
 void drawObjectList() {
-	glClear(GL_COLOR_BUFFER_BIT); // Clear display window.
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear display window.
 
 	// background
 	// clouds
@@ -75,7 +75,7 @@ void drawObjectList() {
 	// Draw objects
 	drawPipes(&pipeList);
 	drawPlayer(&player);
-	drawScore(&score);
+	drawScore(score.currentScore);
 
 	glFlush();
 	glutSwapBuffers();

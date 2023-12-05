@@ -58,11 +58,25 @@ void endGame(score *board) {
 
 }
 
-void drawScore(score *board) {
-	/*
-	 * Draw the score number for the user to see
-	 */
+#include <GL/glut.h>
 
-	std::cout << "Current Score: " << board->currentScore << "\n";
+void drawScore(int score) {
+    // Convert the score to a string
+    char scoreStr[12]; // Buffer to hold the score as string
+    sprintf(scoreStr, "%d", score); // Convert integer to string
 
+    // set the color for the score text to Black
+    glColor3f(0.0f, 0.0f, 0.0f); // Black color
+
+    // disable lighting and depth test to ensure the text is visible on top of everything
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
+
+    // set the raster position for the text to top left corner
+    glRasterPos2f(20.0f, 20.0f);
+
+    // draw each character of the score string
+    for (char* p = scoreStr; *p; p++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *p);
+    }
 }

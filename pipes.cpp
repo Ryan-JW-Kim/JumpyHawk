@@ -27,8 +27,6 @@ int checkCollision(player *player, pipeList *list) {
 					return 1;
 				}
 			}
-
-
 			currPipe = currPipe->next;
 		}
 	}
@@ -149,7 +147,7 @@ int createNext(pipeList *list) {
 
 	GLint x;
 	if (list->numPipes == 0) {
-		x = 250;
+		x = 800;
 		list->start = newPipe;
 	} else {
 		x = endPipe->x + 200; // Inter-pipe padding of 200 units
