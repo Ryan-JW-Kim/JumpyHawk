@@ -34,11 +34,8 @@ void physicsUpdate(int value) {
 
     std::cout << "Delta Time: " << deltaTime << "\n";
 
-    std::cout << "1\n";
-
     updatePhysics(&player, deltaTime);
     movePipes(&pipeList, score.currentSpeed, deltaTime);
-    std::cout << "2\n";
 
     if (checkCollision(&player, &pipeList)) {
     	endGame(&score);
@@ -113,6 +110,7 @@ int main(int argc, char** argv) {
 
 	glutInit(&argc, argv);
 	init();
+	glClearColor(135.0 / 255.0, 206.0 / 255.0, 235.0 / 255.0, 0.0);
 	glutDisplayFunc(drawObjectList);
 	glutReshapeFunc(winReshapeFcn);
 	glutKeyboardFunc(key);
